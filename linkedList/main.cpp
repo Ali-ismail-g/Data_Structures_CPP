@@ -70,6 +70,77 @@ public:
             curr = curr->next;
         }
     }
+    void removeFirst(){
+        if(length == 0){
+            cout << "Can not remove from empty list\n";
+            return;
+        }else if(length == 1){
+            delete first;
+            first = last = NULL;
+            length--;
+        }else{
+            Node*curr = first;
+            first = first->next;
+            delete curr;
+            length--;
+        }
+    }
+    void removeLast(){
+        if(length == 0){
+            cout << "Can not remove from empty list\n";
+            return;
+        }else if(length == 1){
+            delete first;
+            first = last = NULL;
+            length--;
+        }else{
+            Node*curr = first->next;
+            Node*prev = first;
+            while(curr != last){
+                prev=curr;
+                curr=curr->next;
+            }
+            delete curr;
+            prev->next=NULL;
+            last=prev;
+            length--;
+        }
+    }
+    void removeElement(int element){
+        if(length ==0){
+            cout << "Can not remove from empty list\n";
+            return;
+        }
+        Node*prev,*curr;
+        if(first->item == element){
+            curr=first;
+            first=first->next;
+            delete curr;
+            length--;
+            if(length==0){
+                last=NULL;
+            }
+        }else{
+            curr=first->next;
+            prev=first;
+            while(curr!=NULL && curr->item!=element){
+                prev=curr;
+                curr=curr->next;
+            }
+            if(curr==NULL){
+                cout<<"element not found!!"<<endl;
+                return;
+            }else{
+                prev->next=curr->next;
+                if(last==curr){
+                    last=prev;
+                }
+                delete curr;
+                length--;
+            }
+        }
+    }
+
 };
 
 int main()
@@ -87,4 +158,12 @@ int main()
     l.insertFirst(12);
     l.insertLast(22);
     l.print();
+    cout<<endl;
+    l.removeFirst();
+    l.removeLast();
+    l.print();
+    cout<<endl;
+    l.removeElement(2);
+    l.print();
+
 }
